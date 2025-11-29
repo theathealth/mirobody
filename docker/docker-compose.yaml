@@ -1,0 +1,159 @@
+x-common: &common
+  pull_policy: never
+  healthcheck:
+    interval: 10s
+    timeout: 5s
+    retries: 3
+    start_period: 15s
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "5m"
+      max-file: "3"
+
+services:
+  backend:
+    image: mirobody-demo-backend:latest
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+    pull_policy: never
+    restart: always
+    stop_grace_period: 1s
+    command: >
+      sh -c "
+        cd /app/ &&
+        python -m main
+      "
+    ports:
+      - "18080:18080"
+    volumes:
+      - ..:/app
+      - ../htdoc:/htdoc
+      - demo_upload:/srv/theta_mcp/upload
+      - demo_charts:/srv/theta_mcp/charts
+    networks:
+      - mirobody_demo_network
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+      - TZ=Etc/UTC
+      - LoggerType=${LoggerType:-json}
+
+      - ENV=${ENV:-localdb}
+      # - CONFIG_SERVER=${CONFIG_SERVER}
+      # - CONFIG_TOKEN=${CONFIG_TOKEN}
+      # - CONFIG_ENCRYPTION_KEY=${CONFIG_ENCRYPTION_KEY}
+
+      - MINIO_ENDPOINT=http://minio:9000
+      - MINIO_PUBLIC_URL=http://localhost:9000
+      - MINIO_ACCESS_KEY=minioadmin
+      - MINIO_SECRET_KEY=minioadmin
+      - MINIO_BUCKET=theta
+      - MINIO_REGION=us-east-1
+      - MINIO_PUBLIC=true
+      
+      - HTTP_HOST=0.0.0.0
+      - HTTP_PORT=18080
+      - HTTP_ROOT=/htdoc
+
+    depends_on:
+      - redis
+      - db
+
+
+  minio:
+    image: ${MINIO_IMAGE:-minio/minio:latest}
+    container_name: minio-storage
+    restart: always
+    stop_grace_period: 1s
+    ports:
+      - "9000:9000"      # MinIO API
+      - "9001:9001"      # MinIO Console
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+      TZ: Etc/UTC
+    entrypoint: >
+      /bin/sh -c "
+      mkdir -p /data/theta &&
+      minio server /data --console-address ':9001' &
+      sleep 3 &&
+      mc alias set myminio http://localhost:9000 minioadmin minioadmin &&
+      mc mb --ignore-existing myminio/theta &&
+      mc anonymous set download myminio/theta &&
+      wait
+      "
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - mirobody_demo_network
+
+  db:
+    image: mirobody-demo-db:latest
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+    pull_policy: never
+    restart: always
+    stop_grace_period: 1s
+    ports:
+      - "5432:5432"
+    volumes:
+      - demo_postgres:/var/lib/postgresql/data
+      - ..:/app
+    networks:
+      - mirobody_demo_network
+    environment:
+      - TZ=Etc/UTC
+      - ENV=${ENV}
+
+  redis:
+    image: ${REDIS_IMAGE:-redis:7.0-alpine}
+    restart: always
+    stop_grace_period: 1s
+    ports:
+      - "6379:6379"
+    command: >
+      redis-server
+      --bind 0.0.0.0
+      --port 6379
+      --protected-mode no
+      --requirepass your_secure_password_here
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+      --appendonly yes
+      --appendfilename "appendonly.aof"
+      --appendfsync everysec
+      --loglevel notice
+      --timeout 60
+      --tcp-keepalive 30
+      --io-threads 4
+      --io-threads-do-reads yes
+      --tcp-backlog 511
+    networks:
+      - mirobody_demo_network
+    environment:
+      - TZ=Etc/UTC
+
+networks:
+  mirobody_demo_network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.103.0.0/16
+          gateway: 10.103.0.1
+
+volumes:
+  demo_postgres:
+  demo_upload:
+  demo_charts:
+  minio_data:

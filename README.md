@@ -1,4 +1,4 @@
-# Mirobody Demo
+# Mirobody
 
 **Next-Generation AI-Native Data Analysis Platform**
 

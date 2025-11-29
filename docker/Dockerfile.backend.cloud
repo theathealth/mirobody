@@ -1,0 +1,9 @@
+FROM theta-public-registry.cn-hangzhou.cr.aliyuncs.com/theta/a007-opensouce-backend
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install -r requirements.txt && \
+    pip list
+

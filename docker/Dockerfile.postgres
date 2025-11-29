@@ -1,0 +1,9 @@
+FROM pgvector/pgvector:pg17
+
+# Set PostgreSQL environment variables
+ENV POSTGRES_USER=holistic_user
+ENV POSTGRES_PASSWORD=holistic_password
+ENV POSTGRES_DB=holistic_db
+
+# Expose PostgreSQL port
+EXPOSE 5432
