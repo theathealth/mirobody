@@ -1,99 +1,144 @@
+这是一个更新后的完整 `.md` 文件。
+
+我在 **"Configuration"** 部分增加了对登录配置的说明，并重写了 **"Access & Authentication"** 部分，以包含邮箱验证码登录、官方网页客户端选项以及配置说明。
+
+````markdown
 # Mirobody
+
+### The Open-Source, Self-Hosted MCP Server Solution for Your Data
 
 **Next-Generation AI-Native Data Analysis Platform**
 
-A modern data analysis platform with native support for:
-- 🚀 **Write Tools Once, Use Everywhere** - One codebase, multiple AI clients
-- 🔐 **OAuth MCP Server** - Standard MCP protocol with OAuth authentication
-- 🤖 **Claude Apps Skills** - Seamless integration with Claude
-- 🔌 **OpenAI Apps-SDK** - Direct ChatGPT integration
-- 🔒 **100% Local Deployment** - Complete privacy control with full local deployment. All user personalized data is stored locally on your own infrastructure.
-
-Build any data analysis capability you need - the platform adapts to your tools, not the other way around.
-
+Mirobody is a modern, privacy-first platform designed to bridge your data with the latest AI capabilities. It serves as a universal adapter for your tools, compliant with the Model Context Protocol (MCP).
 
 ---
 
-## 🏥 Showcase: Health Data Analysis Platform
+## 🌟 Why Mirobody?
 
-As a capability demonstration, we've built a comprehensive health data analysis platform:
+Mirobody isn't just another chatbot wrapper. It is a **Dual MCP Architecture** system that revolutionizes how AI interacts with your local data:
 
-**Data Integration:**
-- 📱 **300+ Device Manufacturers** - Support for diverse health devices
-- 🍎 **Apple Health & Google Health** - With companion mobile apps
-- 🏥 **EHR Integration** - Covering 90% of US population's electronic health records
-- 💬 **Multi-Modal Input** - Voice, live chat, images, files, text, and more
+* 🔄 **Dual MCP Architecture**
+    Works simultaneously as an **MCP Server** (providing tools to Claude/Cursor) AND an **MCP Client** (consuming external tools), enabling complex tool composition and orchestration.
 
-**Focus on Tools, Not Configuration:**
-The entire platform is powered by custom tools in the `tools/` directory. Want to build something different? Just write your own tools.
+* 🚀 **Write Tools Once, Use Everywhere**
+    Build your tools in standard Python once, and deploy them instantly across **Claude Desktop**, **ChatGPT**, and **Local LLMs**.
+
+* 🎯 **Native Claude Code Experience**
+    Replicates the powerful data analysis workflows of Claude Code, but fully controlled by you on your own infrastructure.
+
+* 🔐 **OAuth MCP Server**
+    Standard MCP protocol implementation with built-in OAuth authentication for secure access.
+
+* 🤖 **Agent-Ready**
+    Native integration with **Claude's Agent capabilities** and **OpenAI Apps-SDK** for autonomous complex task solving.
+
+* 🔒 **100% Data Sovereignty**
+    Fully self-hosted. Your data, your infrastructure, your rules. No third-party cloud required. All user personalized data is stored locally.
 
 ---
 
-## Setup
+## 🏥 Showcase: Health Data Platform
 
-1. Copy the example configuration file:
+To demonstrate the capability of Mirobody, we have included a comprehensive **Health Data Analysis** suite out-of-the-box. This proves that Mirobody can handle complex, multi-modal, and sensitive data environments.
+
+* **Broad Integration**: Connects with **300+ device manufacturers**, Apple Health, and Google Health.
+* **EHR Ready**: Compatible with systems covering **90% of the US population's** Electronic Health Records.
+* **Multi-Modal**: Analyze health via Voice, Image, Files, or Text.
+
+> *💡 **Tip:** The platform adapts to your tools. Want to build a Finance Analyzer or DevOps Bot instead? Just swap the files in the `tools/` directory!*
+
+---
+
+## ⚡ Quick Start
+
+### 1. Configuration
+Initialize your environment in seconds:
+
 ```bash
 cd config
 cp config.example.yaml config.yaml
-```
+````
 
-2. Modify your configuration file:
-   - **OPENROUTER_API_KEY** is **required** (needed for LLM connection)
-   - **SERPER_API_KEY** (optional, needed for web search/crawler functionality)
-   - Other parameters: refer to `config.example.yaml` and modify as needed
-   - **Note**: All API keys will be automatically encrypted
+> **Note**:
+>
+>   * **LLM Setup**: `OPENROUTER_API_KEY` is required.
+>   * **Auth Setup**: To enable **Google/Apple OAuth** or **Email Verification**, fill in the respective fields in `config.yaml`.
+>   * All API keys are encrypted automatically.
 
-3. **Tools-First Thinking**: Just write your Python tool files in the `tools/` directory. That's it!
-   - ✨ **It's that simple** - No complex configuration needed
-   - 🔧 Give it any tools, and it becomes whatever you want it to be
-   - 💡 The power lies in the tools you provide, not just the prompts
-   - 🚀 Focus on what you want to build, not how to configure it
+### 2\. Create Your Tools
 
-4. Deployment
+Mirobody adopts a **"Tools-First"** philosophy. No complex binding logic is required. Simply drop your Python scripts into the `tools/` directory:
 
-### First-time Deployment or Code Update
-**Recommended: Use cloud mode** (fast, downloads pre-built images):
+  * ✨ **Zero Config**: The system auto-discovers your functions.
+  * 🐍 **Pure Python**: Use the libraries you love (Pandas, NumPy, etc.).
+  * 🔧 **Universal**: A single tool file works for both REST API and MCP.
+
+### 3\. Deployment
+
+Launch the platform using our unified deployment script.
+
+**Option A: Cloud Mode (Recommended)**
+*Fastest start. Downloads pre-built images.*
+
 ```bash
 ./deploy.sh --mode=cloud
 ```
 
-**Alternative: Use local mode** (build everything from scratch):
+**Option B: Local Mode**
+*For developers. Builds everything from source.*
+
 ```bash
 ./deploy.sh --mode=local
 ```
 
-### Daily Startup
-For regular use after initial setup, simply run:
+**Daily Startup**
+*For regular use after initial setup, simply run:*
+
 ```bash
 ./deploy.sh
 ```
 
-This uses the default `up` mode, which skips rebuilding and directly starts the services.
+-----
 
----
+## 🔐 Access & Authentication
 
-**After deployment**, open browser and login:
-   - **Service URL**: http://localhost:18080
-   - **Login options**:
-     - Google account
-     - Apple account  
-     - Pre-configured demo accounts: `demo@mirobody.ai` / `777777`
+Once deployed, you can access the platform through the local web interface or our official hosted client.
 
-**That's it!** Your service now runs as:
-- 🌐 Web application at http://localhost:18080
-- 🔌 OAuth-enabled MCP server (use with Claude Desktop, etc.)
-- 🤖 OpenAI-compatible endpoint (use directly in ChatGPT)
+### 1\. Access Interfaces
 
-Enjoy it!
----
+| Interface | URL | Description |
+|-----------|-----|-------------|
+| **Local Web App** | `http://localhost:18080` | Fully self-hosted web interface running locally. |
+| **Official Client**| [https://mirobody.ai](https://www.google.com/search?q=https://mirobody.ai) | **Recommended.** Our official web client that connects securely to your local backend service. |
+| **MCP Server** | `http://localhost:18080/mcp` | For Claude Desktop / Cursor integration. |
 
+### 2\. Login Methods
 
-## 🔌 API Endpoints
+You can choose to configure your own authentication providers or use the pre-set demo account.
 
-| Endpoint | Description |
-|----------|-------------|
-| `http://localhost:18080/mcp` | MCP protocol interface (JSON-RPC 2.0) |
-| `http://localhost:18080/api/chat` | AI chat interface |
-| `http://localhost:18080/api/history` | Session history |
+  * **Social Login**: Google Account / Apple Account (Requires configuration in `config.yaml`)
+  * **Email Login**: Email Verification Code (Requires configuration in `config.yaml`)
+  * **Demo Account** (Instant Access):
+      * **User:** `demo1@mirobody.ai`,`demo2@mirobody.ai`,`demo3@mirobody.ai`(more demo users configuration in `config.yaml`)
+      * **Password:** `777777`
 
----
+-----
+
+## 🔌 API Reference
+
+Mirobody provides standard endpoints for integration:
+
+| Endpoint | Description | Protocol |
+|----------|-------------|----------|
+| `/mcp` | MCP Protocol Interface | JSON-RPC 2.0 |
+| `/api/chat` | AI Chat Interface | OpenAI Compatible |
+| `/api/history` | Session Management | REST |
+
+-----
+
+\<p align="center"\>
+\<sub\>Built with ❤️ for the AI Open Source Community.\</sub\>
+\</p\>
+
+```
+```
