@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-创建测试用户并测试 API
-在一个脚本中完成：创建用户 → 配置 agents → 创建档案 → 调用 API 测试
+Create test users and test API
+Complete in one script: create users → configure agents → create profiles → test API calls
 """
 
 import argparse
@@ -30,46 +30,46 @@ HARDCODED_JWT_KEY = "myjwtkey"
 # CREATE INDEX IF NOT EXISTS idx_user_agent_prompt_user_id ON theta_ai.user_agent_prompt(user_id);
 
 # ============================================================
-# 用户配置 - 每个用户的所有信息组织在一起
+# User Configuration - All information for each user organized together
 # ============================================================
 
 USER_CONFIGS = [
     {
         "email": "demo_user_alpha@test.com",
-        "name": "测试用户Alpha",
+        "name": "Test User Alpha",
         "gender": 1,
         "agents": {
             "agent1": {
-                "system_prompt": "你是一位专业的健康顾问，擅长分析用户的健康数据并提供个性化建议。你的回答应该基于科学依据，同时考虑用户的个人情况。",
+                "system_prompt": "You are a professional health advisor who excels at analyzing user health data and providing personalized recommendations. Your answers should be based on scientific evidence while considering the user's individual circumstances.",
                 "temperature": 0.7,
                 "max_tokens": 2000
             }
         },
-        "profile": "这是一位30多岁的男性用户，关注心血管健康和体重管理。他希望通过科学的方式改善健康状况，包括合理饮食和规律运动。用户对健康数据分析有浓厚兴趣，希望获得个性化的健康建议。"
+        "profile": "This is a male user in his 30s who is focused on cardiovascular health and weight management. He hopes to improve his health through scientific methods, including proper diet and regular exercise. The user has a strong interest in health data analysis and seeks personalized health advice."
     },
     {
         "email": "demo_user_beta@test.com",
-        "name": "测试用户Beta",
+        "name": "Test User Beta",
         "gender": 2,
         "agents": {
             "agent2": {
-                "system_prompt": "你是一位经验丰富的健康顾问，专注于女性健康管理和营养咨询。你会提供全面的健康建议，包括饮食、运动和生活方式。",
+                "system_prompt": "You are an experienced health advisor specializing in women's health management and nutritional consulting. You provide comprehensive health advice, including diet, exercise, and lifestyle.",
                 "temperature": 0.7,
                 "max_tokens": 2000
             },
             "agent3": {
-                "system_prompt": "你是一位专业的健身教练，帮助用户制定科学的运动计划并监督执行。你会根据用户的身体状况和目标提供个性化的训练方案。",
+                "system_prompt": "You are a professional fitness coach who helps users develop scientific exercise plans and supervises their execution. You provide personalized training programs based on the user's physical condition and goals.",
                 "temperature": 0.8,
                 "max_tokens": 2500
             }
         },
-        "profile": "这是一位30多岁的女性用户，特别关注女性健康、营养均衡和心理健康。她希望在工作和生活之间保持平衡，通过健康的生活方式提升整体福祉。用户对瑜伽和有氧运动感兴趣，也注重饮食营养。"
+        "profile": "This is a female user in her 30s who is particularly concerned about women's health, nutritional balance, and mental health. She hopes to maintain a balance between work and life and improve overall well-being through a healthy lifestyle. The user is interested in yoga and aerobic exercise, and also pays attention to dietary nutrition."
     }
 ]
 
 
 async def get_db_connection():
-    """获取数据库连接"""
+    """Get database connection"""
     # Load config
     config = {}
     for config_file in ['config.required.yaml', 'config.optional.yaml']:
@@ -103,12 +103,12 @@ async def get_db_connection():
 
 
 async def create_or_get_user(conn, user_config):
-    """创建或获取用户"""
+    """Create or get user"""
     email = user_config['email']
     name = user_config['name']
     gender = user_config['gender']
     
-    # 检查用户是否已存在
+    # Check if user already exists
     user = await conn.fetchrow('''
         SELECT id, email, name, gender
         FROM theta_ai.health_app_user
@@ -116,22 +116,22 @@ async def create_or_get_user(conn, user_config):
     ''', email)
     
     if user:
-        print(f"  ℹ️  用户已存在: {email} (ID: {user['id']})")
+        print(f"  ℹ️  User already exists: {email} (ID: {user['id']})")
         return user['id']
     
-    # 创建新用户
+    # Create new user
     user_id = await conn.fetchval('''
         INSERT INTO theta_ai.health_app_user (email, name, gender, is_del)
         VALUES ($1, $2, $3, false)
         RETURNING id
     ''', email, name, gender)
     
-    print(f"  ✓ 创建成功: {email} (ID: {user_id})")
+    print(f"  ✓ Created successfully: {email} (ID: {user_id})")
     return user_id
 
 
 async def upsert_user_agents(conn, user_id, agents):
-    """插入或更新用户 agents 配置"""
+    """Insert or update user agents configuration"""
     await conn.execute('''
         INSERT INTO theta_ai.user_agent_prompt (user_id, prompt, created_at, updated_at)
         VALUES ($1, $2, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
@@ -142,7 +142,7 @@ async def upsert_user_agents(conn, user_id, agents):
     ''', str(user_id), json.dumps(agents))
     
     agent_names = ', '.join(agents.keys())
-    print(f"  ✓ Agents配置完成: {agent_names}")
+    print(f"  ✓ Agents configuration completed: {agent_names}")
 
 
 async def upsert_user_profile(conn, user_id, name, profile):
@@ -151,13 +151,13 @@ async def upsert_user_profile(conn, user_id, name, profile):
         INSERT INTO theta_ai.health_user_profile_by_system 
             (user_id, name, version, common_part, create_time, last_update_time, is_deleted, last_execute_doc_id)
         VALUES ($1, $2, 1, $3, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, false, 0)
-    ''', str(user_id), f'{name}健康档案', profile)
+    ''', str(user_id), f'{name} Health Profile', profile)
     
-    print(f"  ✓ 健康档案已创建")
+    print(f"  ✓ Health profile created")
 
 
 def generate_jwt_token(email, user_id):
-    """生成 JWT token"""
+    """Generate JWT token"""
     jwt_key = HARDCODED_JWT_KEY
     
     payload = {
@@ -174,7 +174,7 @@ def generate_jwt_token(email, user_id):
 
 
 def call_chat_api(token, question, agent_name, server='http://localhost:18080'):
-    """调用 chat API"""
+    """Call chat API"""
     url = f"{server}/api/chat"
     headers = {
         'Content-Type': 'application/json',
@@ -194,7 +194,7 @@ def call_chat_api(token, question, agent_name, server='http://localhost:18080'):
             
             # Check if it's a streaming response (SSE)
             if 'text/event-stream' in content_type or 'stream' in content_type.lower():
-                print(f"  📡 流式响应:")
+                print(f"  📡 Streaming response:")
                 print(f"  {'─'*50}")
                 full_content = ""
                 has_content = False
@@ -218,7 +218,7 @@ def call_chat_api(token, question, agent_name, server='http://localhost:18080'):
                                         full_content += content
                                         has_content = True
                                 elif 'error' in data:
-                                    print(f"\n  ❌ 错误: {json.dumps(data['error'], ensure_ascii=False)}")
+                                    print(f"\n  ❌ Error: {json.dumps(data['error'], ensure_ascii=False)}")
                                     has_content = True
                             except json.JSONDecodeError:
                                 if data_str.strip():
@@ -229,99 +229,99 @@ def call_chat_api(token, question, agent_name, server='http://localhost:18080'):
                 print(f"\n  {'─'*50}")
                 
                 if not has_content:
-                    print("  ⚠️  警告: 收到空响应")
+                    print("  ⚠️  Warning: Received empty response")
                     return None
                 
                 return {'content': full_content, 'type': 'stream'}
             else:
                 # Regular JSON response
                 result = response.json()
-                print(f"  ✓ 响应: {json.dumps(result, ensure_ascii=False)[:100]}...")
+                print(f"  ✓ Response: {json.dumps(result, ensure_ascii=False)[:100]}...")
                 return result
         else:
-            print(f"  ❌ API 调用失败: {response.status_code}")
-            print(f"  响应: {response.text[:200]}")
+            print(f"  ❌ API call failed: {response.status_code}")
+            print(f"  Response: {response.text[:200]}")
             return None
     
     except Exception as e:
-        print(f"  ❌ 调用错误: {e}")
+        print(f"  ❌ Call error: {e}")
         return None
 
 
 async def process_user(conn, user_config, args):
-    """处理单个用户：创建 → 配置 → 测试"""
+    """Process single user: create → configure → test"""
     print(f"\n{'='*60}")
-    print(f"📝 处理用户: {user_config['name']} ({user_config['email']})")
+    print(f"📝 Processing user: {user_config['name']} ({user_config['email']})")
     print(f"{'='*60}")
     
     try:
-        # 1. 创建用户
-        print("\n▶ 创建用户账号...")
+        # 1. Create user
+        print("\n▶ Creating user account...")
         user_id = await create_or_get_user(conn, user_config)
         
-        # 2. 配置 agents
-        print("\n▶ 配置用户 agents...")
+        # 2. Configure agents
+        print("\n▶ Configuring user agents...")
         await upsert_user_agents(conn, user_id, user_config['agents'])
         
-        # 3. 创建健康档案
-        print("\n▶ 创建健康档案...")
+        # 3. Create health profile
+        print("\n▶ Creating health profile...")
         await upsert_user_profile(conn, user_id, user_config['name'], user_config['profile'])
         
-        # 4. 生成 JWT token
-        print("\n▶ 生成 JWT token...")
+        # 4. Generate JWT token
+        print("\n▶ Generating JWT token...")
         token = generate_jwt_token(user_config['email'], user_id)
-        print(f"  ✓ Token 生成成功 (前50字符): {token[:50]}...")
+        print(f"  ✓ Token generated successfully (first 50 chars): {token[:50]}...")
         
-        # 5. 测试 API（如果不跳过）
+        # 5. Test API (if not skipped)
         if not args.skip_test:
-            print("\n▶ 测试 API 调用...")
-            # 获取第一个 agent 名称
+            print("\n▶ Testing API call...")
+            # Get first agent name
             first_agent = list(user_config['agents'].keys())[0]
             print(f"  Agent: {first_agent}")
-            print(f"  问题: {args.question}")
+            print(f"  Question: {args.question}")
             
             result = call_chat_api(token, args.question, first_agent, args.server)
             
             if result:
-                print(f"\n  ✅ API 测试成功!")
+                print(f"\n  ✅ API test successful!")
             else:
-                print(f"\n  ❌ API 测试失败!")
+                print(f"\n  ❌ API test failed!")
         
-        print(f"\n✅ 用户 {user_config['name']} 处理完成!")
+        print(f"\n✅ User {user_config['name']} processing completed!")
         print(f"   ID: {user_id}")
-        print(f"   邮箱: {user_config['email']}")
+        print(f"   Email: {user_config['email']}")
         print(f"   Agents: {', '.join(user_config['agents'].keys())}")
         
         return True
         
     except Exception as e:
-        print(f"\n❌ 处理用户失败: {e}")
+        print(f"\n❌ User processing failed: {e}")
         import traceback
         traceback.print_exc()
         return False
 
 
 async def main():
-    parser = argparse.ArgumentParser(description='创建测试用户并测试 API')
-    parser.add_argument('--question', '-q', default='你好，介绍一下你自己', help='测试问题')
-    parser.add_argument('--server', default='http://localhost:18080', help='服务器地址')
-    parser.add_argument('--skip-test', action='store_true', help='跳过 API 测试')
+    parser = argparse.ArgumentParser(description='Create test users and test API')
+    parser.add_argument('--question', '-q', default='Hello, please introduce yourself', help='Test question')
+    parser.add_argument('--server', default='http://localhost:18080', help='Server address')
+    parser.add_argument('--skip-test', action='store_true', help='Skip API test')
     
     args = parser.parse_args()
     
     print("="*60)
-    print("🚀 创建测试用户和数据")
+    print("🚀 Creating test users and data")
     print("="*60)
     
-    # 连接数据库
+    # Connect to database
     try:
         conn = await get_db_connection()
-        print("✓ 数据库连接成功\n")
+        print("✓ Database connection successful\n")
     except Exception as e:
-        print(f"❌ 数据库连接失败: {e}")
+        print(f"❌ Database connection failed: {e}")
         sys.exit(1)
     
-    # 处理所有用户
+    # Process all users
     success_count = 0
     fail_count = 0
     
@@ -332,23 +332,23 @@ async def main():
         else:
             fail_count += 1
     
-    # 关闭连接
+    # Close connection
     await conn.close()
     
-    # 显示总结
+    # Display summary
     print("\n" + "="*60)
-    print("📊 创建完成")
+    print("📊 Creation completed")
     print("="*60)
-    print(f"✅ 成功: {success_count} 个用户")
+    print(f"✅ Successful: {success_count} users")
     if fail_count > 0:
-        print(f"❌ 失败: {fail_count} 个用户")
+        print(f"❌ Failed: {fail_count} users")
     
-    print("\n💡 下一步:")
-    print("   1. 使用以下邮箱登录:")
+    print("\n💡 Next steps:")
+    print("   1. Login with the following emails:")
     for user_config in USER_CONFIGS:
         print(f"      - {user_config['email']}")
-    print("   2. 验证码: 000000")
-    print("   3. 开始使用配置的 agents")
+    print("   2. Verification code: 000000")
+    print("   3. Start using the configured agents")
     print()
     
     if fail_count > 0:
