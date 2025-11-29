@@ -1,2 +1,2 @@
-
+--extra-index-url https://repo.thetahealth.ai/repository/pypi-ai-snapshots/simple/
 mirobody
