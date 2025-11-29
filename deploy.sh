@@ -22,11 +22,11 @@ fi
 BUILD_MODE="cloud"
 
 # Cloud images (only for backend)
-CLOUD_BACKEND_IMAGE="theta-public-registry.cn-hangzhou.cr.aliyuncs.com/theta/mirobody-demo-backend"
+CLOUD_BACKEND_IMAGE="theta-public-registry.cn-hangzhou.cr.aliyuncs.com/theta/mirobody-backend"
 
 # Local images
-BACKEND_IMAGE="mirobody-demo-backend"
-DATABASE_IMAGE="mirobody-demo-db"
+BACKEND_IMAGE="mirobody-backend"
+DATABASE_IMAGE="mirobody-db"
 
 USED_PORTS="18080 6379 5432"
 

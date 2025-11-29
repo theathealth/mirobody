@@ -13,7 +13,7 @@ x-common: &common
 
 services:
   backend:
-    image: mirobody-demo-backend:latest
+    image: mirobody-backend:latest
     deploy:
       resources:
         limits:
@@ -31,29 +31,16 @@ services:
     volumes:
       - ..:/app
       - ../htdoc:/htdoc
-      - demo_upload:/srv/theta_mcp/upload
-      - demo_charts:/srv/theta_mcp/charts
+      - mirobody_upload:/srv/theta_mcp/upload
+      - mirobody_charts:/srv/theta_mcp/charts
     networks:
-      - mirobody_demo_network
+      - mirobody_network
     environment:
       - PYTHONUNBUFFERED=1
       - PYTHONPATH=/app
       - TZ=Etc/UTC
       - LoggerType=${LoggerType:-json}
-
       - ENV=${ENV:-localdb}
-      # - CONFIG_SERVER=${CONFIG_SERVER}
-      # - CONFIG_TOKEN=${CONFIG_TOKEN}
-      # - CONFIG_ENCRYPTION_KEY=${CONFIG_ENCRYPTION_KEY}
-
-      - MINIO_ENDPOINT=http://minio:9000
-      - MINIO_PUBLIC_URL=http://localhost:9000
-      - MINIO_ACCESS_KEY=minioadmin
-      - MINIO_SECRET_KEY=minioadmin
-      - MINIO_BUCKET=theta
-      - MINIO_REGION=us-east-1
-      - MINIO_PUBLIC=true
-      
       - HTTP_HOST=0.0.0.0
       - HTTP_PORT=18080
       - HTTP_ROOT=/htdoc
@@ -73,7 +60,7 @@ services:
       - "9001:9001"      # MinIO Console
     environment:
       MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
+      MINIO_ROOT_PASSWORD: minioapwd
       TZ: Etc/UTC
     entrypoint: >
       /bin/sh -c "
@@ -93,10 +80,10 @@ services:
       timeout: 20s
       retries: 3
     networks:
-      - mirobody_demo_network
+      - mirobody_network
 
   db:
-    image: mirobody-demo-db:latest
+    image: mirobody-db:latest
     deploy:
       resources:
         limits:
@@ -107,13 +94,13 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - demo_postgres:/var/lib/postgresql/data
+      - mirobody_postgres:/var/lib/postgresql/data
       - ..:/app
     networks:
-      - mirobody_demo_network
+      - mirobody_network
     environment:
       - TZ=Etc/UTC
-      - ENV=${ENV}
+      - ENV=${ENV:-localdb}
 
   redis:
     image: ${REDIS_IMAGE:-redis:7.0-alpine}
@@ -139,12 +126,12 @@ services:
       --io-threads-do-reads yes
       --tcp-backlog 511
     networks:
-      - mirobody_demo_network
+      - mirobody_network
     environment:
       - TZ=Etc/UTC
 
 networks:
-  mirobody_demo_network:
+  mirobody_network:
     driver: bridge
     ipam:
       driver: default
@@ -153,7 +140,7 @@ networks:
           gateway: 10.103.0.1
 
 volumes:
-  demo_postgres:
-  demo_upload:
-  demo_charts:
-  minio_data:
+  mirobody_postgres:
+  mirobody_upload:
+  mirobody_charts:
+  mirobody_minio:
