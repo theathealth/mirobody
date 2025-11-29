@@ -67,7 +67,7 @@ services:
       mkdir -p /data/theta &&
       minio server /data --console-address ':9001' &
       sleep 3 &&
-      mc alias set myminio http://localhost:9000 minioadmin minioadmin &&
+      mc alias set myminio http://localhost:9000 minioadmin minioapwd &&
       mc mb --ignore-existing myminio/theta &&
       mc anonymous set download myminio/theta &&
       wait
