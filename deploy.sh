@@ -18,8 +18,8 @@ fi
 #-----------------------------------------------------------------------------
 # Global config.
 
-# Build mode: up, cloud or local (default: cloud)
-BUILD_MODE="local"
+# Build mode: up, cloud or local (default: up)
+BUILD_MODE="up"
 
 # Cloud images (only for backend)
 CLOUD_BACKEND_IMAGE="theta-public-registry.cn-hangzhou.cr.aliyuncs.com/theta/mirobody-backend"

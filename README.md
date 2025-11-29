@@ -49,14 +49,30 @@ cp config.example.yaml config.yaml
    - 💡 The power lies in the tools you provide, not just the prompts
    - 🚀 Focus on what you want to build, not how to configure it
 
-## Deployment
+4. Deployment
 
+### First-time Deployment or Code Update
+**Recommended: Use cloud mode** (fast, downloads pre-built images):
 ```bash
-# One-click deployment
+./deploy.sh --mode=cloud
+```
+
+**Alternative: Use local mode** (build everything from scratch):
+```bash
+./deploy.sh --mode=local
+```
+
+### Daily Startup
+For regular use after initial setup, simply run:
+```bash
 ./deploy.sh
 ```
 
-4. Open browser and login:
+This uses the default `up` mode, which skips rebuilding and directly starts the services.
+
+---
+
+**After deployment**, open browser and login:
    - **Service URL**: http://localhost:18080
    - **Login options**:
      - Google account
@@ -71,38 +87,6 @@ cp config.example.yaml config.yaml
 Enjoy it!
 ---
 
-## 📊 Quick Test
-
-```bash
-# Test local wheel installation
-./shell/test_local_install.sh
-
-# Get MCP tools list
-./shell/get_tools.sh
-
-# Expected: 16 available tools
-```
-
----
-
-## 🔄 Update Mirobody
-
-### Quick Update
-
-```bash
-./shell/update_mirobody.sh
-```
-
-### Manual Update
-
-```bash
-# 1. Update pip package
-pip install --upgrade mirobody \
-    --extra-index-url https://dev-nexus.aws.thetahealth.ai/repository/pypi-ai-snapshots/simple/
-
-# 2. Rebuild Docker images
-./deploy.sh
-```
 
 ## 🔌 API Endpoints
 
