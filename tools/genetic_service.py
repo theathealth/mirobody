@@ -7,9 +7,9 @@ Responsible for genetic data management and querying
 import traceback
 from typing import Any, Dict, List, Optional, Union
 
-from ...utils.data import DataConverter
-from ...utils.db import execute_query
-from ...utils.log import log_setter
+from mirobody.utils.data import DataConverter
+from mirobody.utils.db import execute_query
+from mirobody.utils.log import log_setter
 
 
 class GeneticService():
