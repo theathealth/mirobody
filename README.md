@@ -77,18 +77,18 @@ Mirobody adopts a **"Tools-First"** philosophy. No complex binding logic is requ
 
 Launch the platform using our unified deployment script.
 
-**Option A: Cloud Mode (Recommended)**
-*Fastest start. Downloads pre-built images.*
-
-```bash
-./deploy.sh --mode=cloud
-```
-
-**Option B: Local Mode**
-*For developers. Builds everything from source.*
+**Option A: Local Mode**
+* Builds everything from scrash.*
 
 ```bash
 ./deploy.sh --mode=local
+```
+
+**Option B: Cloud Mode (arm ready，x86 comming soon)**
+* Downloads pre-built images.*
+
+```bash
+./deploy.sh --mode=cloud
 ```
 
 **Daily Startup**
@@ -109,7 +109,7 @@ Once deployed, you can access the platform through the local web interface or ou
 | Interface | URL | Description |
 |-----------|-----|-------------|
 | **Local Web App** | `http://localhost:18080` | Fully self-hosted web interface running locally. |
-| **Official Client**| [https://mirobody.ai](https://www.google.com/search?q=https://mirobody.ai) | **Recommended.** Our official web client that connects securely to your local backend service. |
+| **Official Client**| [https://my.mirobody.ai](https://www.google.com/search?q=https://thetahealth.ai) | **Recommended.** Our official web client that connects securely to your local backend service. |
 | **MCP Server** | `http://localhost:18080/mcp` | For Claude Desktop / Cursor integration. |
 
 ### 2\. Login Methods
