@@ -18,21 +18,6 @@ import sys
 # Decrypted from: gAAAAABpJiizBb7BmtHTYPTQc7kcKb8qNulxcTcOCPXxXw2zPo6w4H-QCb-htLdQMZl0ZuFFZx2y0jzwZufZ3Nz6s0DvkI7G6A==
 HARDCODED_JWT_KEY = "myjwtkey"
 
-
-# CREATE TABLE IF NOT EXISTS theta_ai.user_agent_prompt (
-#     id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-#     user_id VARCHAR(255) NOT NULL UNIQUE,
-#     prompt JSONB NOT NULL DEFAULT '{}'::jsonb,
-#     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-#     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-# );
-
-# CREATE INDEX IF NOT EXISTS idx_user_agent_prompt_user_id ON theta_ai.user_agent_prompt(user_id);
-
-# ============================================================
-# User Configuration - All information for each user organized together
-# ============================================================
-
 USER_CONFIGS = [
     {
         "email": "demo_user_alpha@test.com",
