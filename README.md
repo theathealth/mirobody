@@ -11,21 +11,23 @@ Mirobody is a modern, privacy-first platform designed to bridge your data with t
 ## 🌟 Why Mirobody?
 
 Mirobody isn't just another chatbot wrapper. It is a **Dual MCP Architecture** system that revolutionizes how AI interacts with your local data:
+Mirobody isn't just another chatbot wrapper. It is a system that revolutionizes how AI interacts with your local data:
 
-* 🔄 **Dual MCP Architecture**
-    Works simultaneously as an **MCP Server** (providing tools to Claude/Cursor) AND an **MCP Client** (consuming external tools), enabling complex tool composition and orchestration.
+* 📂 **Store Data Locally, Context Everywhere**
+    Your personal data resides permanently on your local encrypted storage but is instantly available as context to **ChatGPT**, **Claude**, **Cursor**, or **any MCP-compliant tool**. No need to upload files repeatedly—your data remains private while powering every AI interaction.
 
 * 🚀 **Write Tools Once, Use Everywhere**
-    Build your tools in standard Python once, and deploy them instantly across **Claude Desktop**, **ChatGPT**, and **Local LLMs**.
+    Build your tools in standard Python once. Mirobody automatically bridges them to **any MCP Client** (e.g., Claude Desktop, Cursor, IDEs) and **ChatGPT WebSite/Client**, ensuring your code works seamlessly across ecosystems without modification.
+
+* 🛡️ **Secure Dual MCP Architecture**
+    Works simultaneously as an **MCP Client** (consuming tools) and an **OAuth-enabled MCP Server** (providing tools). This unique architecture enables complex tool orchestration while ensuring secure, authenticated access for any MCP-compliant client.
 
 * 🎯 **Native Claude Code Experience**
     Replicates the powerful data analysis workflows of Claude Code, but fully controlled by you on your own infrastructure.
 
-* 🔐 **OAuth MCP Server**
-    Standard MCP protocol implementation with built-in OAuth authentication for secure access.
-
 * 🤖 **Agent-Ready**
-    Native integration with **Claude's Agent capabilities** and **OpenAI Apps-SDK** for autonomous complex task solving.
+    Native integration with **OpenAI Apps-SDK**.
+    *(Coming Soon)* **Full Claude Agent Skills Compatibility**: Directly use standard **Claude Agent Skills** (zip files) without any modification or conversion.
 
 * 🔒 **100% Data Sovereignty**
     Fully self-hosted. Your data, your infrastructure, your rules. No third-party cloud required. All user personalized data is stored locally.
@@ -73,14 +75,14 @@ Mirobody adopts a **"Tools-First"** philosophy. No complex binding logic is requ
 Launch the platform using our unified deployment script.
 
 **Option A: Local Mode**
-* Builds everything from scrash.*
+*Builds everything from scratch.*
 
 ```bash
 ./deploy.sh --mode=local
 ```
 
-**Option B: Cloud Mode (arm ready，x86 comming soon)**
-* Downloads pre-built images.*
+**Option B: Cloud Mode (ARM ready, x86 coming soon)**
+*Downloads pre-built images.*
 
 ```bash
 ./deploy.sh --mode=cloud
@@ -104,7 +106,7 @@ Once deployed, you can access the platform through the local web interface or ou
 | Interface | URL | Description |
 |-----------|-----|-------------|
 | **Local Web App** | `http://localhost:18080` | Fully self-hosted web interface running locally. |
-| **Official Client**| [https://my.mirobody.ai](https://www.google.com/search?q=https://thetahealth.ai) | **Recommended.** Our official web client that connects securely to your local backend service. |
+| **Official Client**| [https://my.mirobody.ai](https://my.mirobody.ai) | **Recommended.** Our official web client that connects securely to your local backend service. |
 | **MCP Server** | `http://localhost:18080/mcp` | For Claude Desktop / Cursor integration. |
 
 ### 2\. Login Methods
@@ -114,7 +116,7 @@ You can choose to configure your own authentication providers or use the pre-set
   * **Social Login**: Google Account / Apple Account (Requires configuration in `config.yaml`)
   * **Email Login**: Email Verification Code (Requires configuration in `config.yaml`)
   * **Demo Account** (Instant Access):
-      * **User:** `demo1@mirobody.ai`,`demo2@mirobody.ai`,`demo3@mirobody.ai`(more demo users configuration in `config.yaml`)
+      * **Users:** `demo1@mirobody.ai`, `demo2@mirobody.ai`, `demo3@mirobody.ai` (More demo users configurable in `config.yaml`)
       * **Password:** `777777`
 
 -----
