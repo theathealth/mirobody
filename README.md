@@ -1,8 +1,8 @@
 # Mirobody
 
-### The Open-Source, Self-Hosted MCP Server Solution for Your Data
+### The Open-Source, Self-Hosted MCP Engine for Deep Research & Data Analysis
 
-**Next-Generation AI-Native Data Analysis Platform**
+**Next-Generation AI-Native Platform for Autonomous Insight**
 
 Mirobody is a modern, privacy-first platform designed to bridge your data with the latest AI capabilities. It serves as a universal adapter for your tools, compliant with the Model Context Protocol (MCP).
 
@@ -11,7 +11,6 @@ Mirobody is a modern, privacy-first platform designed to bridge your data with t
 ## 🌟 Why Mirobody?
 
 Mirobody isn't just another chatbot wrapper. It is a **Dual MCP Architecture** system that revolutionizes how AI interacts with your local data:
-Mirobody isn't just another chatbot wrapper. It is a system that revolutionizes how AI interacts with your local data:
 
 * 🚀 **Write Tools Once, Use Everywhere**
     Build tools in standard Python once. Mirobody automatically bridges them to **ChatGPT** (via native Apps-SDK) and **the entire MCP Ecosystem** (Claude, Cursor, IDEs), ensuring your code runs seamlessly across platforms.
