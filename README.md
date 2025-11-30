@@ -26,9 +26,7 @@ Mirobody isn't just another chatbot wrapper. It is a system that revolutionizes 
     Replicates the powerful data analysis workflows of Claude Code, but fully controlled by you on your own infrastructure.
 
 * 🤖 **Agent-Ready**
-    Native integration with **OpenAI Apps-SDK**.
-
-    **Full Claude Agent Skills Compatibility***(Coming Soon)*: Directly use standard **Claude Agent Skills** (zip files) without any modification or conversion.
+    Native integration with **OpenAI Apps-SDK**.**Full Claude Agent Skills Compatibility***(Coming Soon)*: Directly use standard **Claude Agent Skills** (zip files) without any modification or conversion.
 
 * 🔒 **100% Data Sovereignty**
     Fully self-hosted. Your data, your infrastructure, your rules. No third-party cloud required. All user personalized data is stored locally.
