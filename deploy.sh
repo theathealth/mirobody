@@ -18,7 +18,7 @@ fi
 #-----------------------------------------------------------------------------
 # Global config.
 
-# Build mode: up, cloud or local (default: up)
+# Build mode: up, image or local (default: up)
 BUILD_MODE="up"
 
 # Cloud images (only for backend)
@@ -45,16 +45,16 @@ for arg in "$@"; do
             echo "Usage: ./deploy.sh [OPTIONS]"
             echo ""
             echo "Options:"
-            echo "  --mode=cloud    Pull cloud backend, build db locally (default)"
+            echo "  --mode=image    Pull pre-built backend image, build db locally"
             echo "  --mode=local    Build all images from official base images"
-            echo "  --mode=up       Skip build, directly compose up"
+            echo "  --mode=up       Skip build, directly compose up (default)"
             echo "  --help          Show this help message"
             echo ""
             echo "Examples:"
-            echo "  ./deploy.sh                  # Cloud backend + pgvector db (default)"
-            echo "  ./deploy.sh --mode=cloud     # Cloud backend + pgvector db"
+            echo "  ./deploy.sh                  # Skip build and start (default)"
+            echo "  ./deploy.sh --mode=image     # Pull pre-built backend + pgvector db"
             echo "  ./deploy.sh --mode=local     # Ubuntu backend + pgvector db"
-            echo "  ./deploy.sh --mode=up        # Skip build and start (after first build)"
+            echo "  ./deploy.sh --mode=up        # Skip build and start"
             echo ""
             echo "Note: Database always built from pgvector/pgvector:pg17"
             exit 0
@@ -68,8 +68,8 @@ for arg in "$@"; do
 done
 
 # Validate build mode
-if [[ "$BUILD_MODE" != "up" && "$BUILD_MODE" != "cloud" && "$BUILD_MODE" != "local" ]]; then
-    echo "Error: BUILD_MODE must be 'up', 'cloud' or 'local', got: $BUILD_MODE"
+if [[ "$BUILD_MODE" != "up" && "$BUILD_MODE" != "image" && "$BUILD_MODE" != "local" ]]; then
+    echo "Error: BUILD_MODE must be 'up', 'image' or 'local', got: $BUILD_MODE"
     exit 1
 fi
 
@@ -100,7 +100,7 @@ stop_containers_by_ports $USED_PORTS
 # Build or prepare images based on mode.
 
 # Set Redis and MinIO images based on mode
-if [[ "$BUILD_MODE" == "cloud" ]]; then
+if [[ "$BUILD_MODE" == "image" ]]; then
     export REDIS_IMAGE="theta-public-registry.cn-hangzhou.cr.aliyuncs.com/docker.io/redis:7.0"
     export MINIO_IMAGE="theta-public-registry.cn-hangzhou.cr.aliyuncs.com/docker.io/minio:latest"
 else
@@ -121,19 +121,19 @@ if [[ "$BUILD_MODE" == "up" ]]; then
     # Check if images exist
     if ! docker image inspect $BACKEND_IMAGE:latest > /dev/null 2>&1; then
         echo "Error: Backend image $BACKEND_IMAGE:latest not found."
-        echo "Please run with --mode=cloud or --mode=local first."
+        echo "Please run with --mode=image or --mode=local first."
         exit 1
     fi
     
     if ! docker image inspect $DATABASE_IMAGE:latest > /dev/null 2>&1; then
         echo "Error: Database image $DATABASE_IMAGE:latest not found."
-        echo "Please run with --mode=cloud or --mode=local first."
+        echo "Please run with --mode=image or --mode=local first."
         exit 1
     fi
 
-elif [[ "$BUILD_MODE" == "cloud" ]]; then
+elif [[ "$BUILD_MODE" == "image" ]]; then
     echo "=========================================="
-    echo "Cloud Mode: Pulling pre-built backend"
+    echo "Image Mode: Pulling pre-built backend"
     echo "=========================================="
     
     # Backend: Pull cloud image and build with pip install

@@ -13,23 +13,17 @@ Mirobody is a modern, privacy-first platform designed to bridge your data with t
 Mirobody isn't just another chatbot wrapper. It is a **Dual MCP Architecture** system that revolutionizes how AI interacts with your local data:
 Mirobody isn't just another chatbot wrapper. It is a system that revolutionizes how AI interacts with your local data:
 
-* 📂 **Store Data Locally, Context Everywhere**
-    Your personal data resides permanently on your local encrypted storage but is instantly available as context to **ChatGPT**, **Claude**, **Cursor**, or **any MCP-compliant tool**. No need to upload files repeatedly—your data remains private while powering every AI interaction.
-
 * 🚀 **Write Tools Once, Use Everywhere**
-    Build your tools in standard Python once. Mirobody automatically bridges them to **any MCP Client** (e.g., Claude Desktop, Cursor, IDEs) and **ChatGPT WebSite/Client**, ensuring your code works seamlessly across ecosystems without modification.
+    Build tools in standard Python once. Mirobody automatically bridges them to **ChatGPT** (via native Apps-SDK) and **the entire MCP Ecosystem** (Claude, Cursor, IDEs), ensuring your code runs seamlessly across platforms.
+
+* 🤖 **Native Agent Engine & Analysis**
+    Powered by a **self-developed agent engine** that fully reproduces **Claude Code's** capabilities locally. Designed to directly load standard **Claude Agent Skills** (Coming Soon) for infinite extensibility.
+
+* 📂 **Store Data Locally, Context Everywhere**
+    Your personal data resides permanently on your local encrypted storage but serves as instant context for **any connected AI**. No need to upload files repeatedly—your data remains private while powering your entire workflow.
 
 * 🛡️ **Secure Dual MCP Architecture**
-    Works simultaneously as an **MCP Client** (consuming tools) and an **OAuth-enabled MCP Server** (providing tools). This unique architecture enables complex tool orchestration while ensuring secure, authenticated access for any MCP-compliant client.
-
-* 🎯 **Native Claude Code Experience**
-    Replicates the powerful data analysis workflows of Claude Code, but fully controlled by you on your own infrastructure.
-
-* 🤖 **Agent-Ready**
-    Native integration with **OpenAI Apps-SDK**.**Full Claude Agent Skills Compatibility***(Coming Soon)*: Directly use standard **Claude Agent Skills** (zip files) without any modification or conversion.
-
-* 🔒 **100% Data Sovereignty**
-    Fully self-hosted. Your data, your infrastructure, your rules. No third-party cloud required. All user personalized data is stored locally.
+    Works simultaneously as an **MCP Client** (consuming tools) and an **OAuth-enabled MCP Server** (providing tools). This unique architecture enables complex tool orchestration while ensuring secure, authenticated access.
 
 ---
 
@@ -84,7 +78,7 @@ Launch the platform using our unified deployment script.
 *Downloads pre-built images.*
 
 ```bash
-./deploy.sh --mode=cloud
+./deploy.sh --mode=image
 ```
 
 **Daily Startup**
