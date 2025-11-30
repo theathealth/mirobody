@@ -1,8 +1,3 @@
-这是一个更新后的完整 `.md` 文件。
-
-我在 **"Configuration"** 部分增加了对登录配置的说明，并重写了 **"Access & Authentication"** 部分，以包含邮箱验证码登录、官方网页客户端选项以及配置说明。
-
-````markdown
 # Mirobody
 
 ### The Open-Source, Self-Hosted MCP Server Solution for Your Data
@@ -139,6 +134,3 @@ Mirobody provides standard endpoints for integration:
 \<p align="center"\>
 \<sub\>Built with ❤️ for the AI Open Source Community.\</sub\>
 \</p\>
-
-```
-```
