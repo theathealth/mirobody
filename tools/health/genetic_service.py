@@ -324,7 +324,7 @@ class GeneticService():
                     "offset": offset,
                     "upload_suggestion": {
                         "message": "No genetic data available for analysis. To get personalized genetic insights and understand your genetic variations, please upload your genetic test results.",
-                        "upload_url": "https://th.thetahealth.ai/upload",
+                        "upload_url": "https://localhost:18080/drive",
                         "instructions": "Upload your genetic test results from services like 23andMe, AncestryDNA, or medical genetic testing to enable comprehensive genetic analysis and health risk assessment.",
                     },
                     "redirect_to_upload": True,
