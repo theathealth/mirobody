@@ -1,34 +1,34 @@
 # Mirobody
 
-### The Open-Source, Self-Hosted MCP data Engine for **Personal Research**
+### Open Source AI Engine for Your Private Data
 
-**Your Personal Research Engine — Deep Insights from Your Own Data**
+**Own Your Data. Empower Your AI.**
 
-Mirobody isn't just another chatbot wrapper. It's a personal research platform that enables deep analysis of your own data — securely stored locally, yet accessible to any AI you choose.
+Mirobody transforms your personal data into a powerful research engine. It's a self-hosted platform that securely manages your private information while making it instantly accessible to **Claude, ChatGPT, and Cursor** through a unified interface.
 
-**Core Philosophy:** Your data stays with you. Research goes deeper.
-
-**Tools Thinking First** — A personalized data analysis engine driven by tools-first architecture. Build your analysis capabilities by creating tools, not by configuring complex systems.
+**Stop uploading files repeatedly. Start building your personal intelligence.**
 
 ---
 
-* 🚀 **Write Tools Once, Use Everywhere**
-    Build tools in standard Python once. Mirobody automatically bridges them to **ChatGPT** (via native Apps-SDK) and **the entire MCP Ecosystem** (Claude, Cursor, IDEs), ensuring your code runs seamlessly across platforms.
+### Why Mirobody?
 
-* 🤖 **Native Agent Engine & Analysis**
-    Powered by a **self-developed agent engine** that fully reproduces **Claude Code's** capabilities locally. Designed to directly load standard **Claude Agent Skills** (Coming Soon) for infinite extensibility.
+* 🚀 **Write Once, Run Everywhere**
+    Create Python tools once. Mirobody instantly bridges them to **ChatGPT** (via Apps-SDK) and the entire **MCP Ecosystem** (Claude Desktop, Cursor), making your code universal.
 
-* 📂 **Store Data Locally, Context Everywhere**
-    Your personal research data resides permanently on your local encrypted storage but serves as instant context for **any connected AI**. No need to upload files repeatedly—your data remains private while powering your entire research workflow.
+* 🧠 **Local Intelligence, Global Reach**
+    Keep your sensitive data encrypted locally. Mirobody serves it as on-demand context to any AI model you choose, ensuring privacy without sacrificing power.
 
-* 🛡️ **Secure Dual MCP Architecture**
-    Works simultaneously as an **MCP Client** (consuming tools) and an **OAuth-enabled MCP Server** (providing tools). 
+* 🤖 **Professional Agent Engine**
+    Built-in agent orchestration that rivals **Claude Code**. Capable of executing complex, multi-step research tasks directly on your machine.
+
+* 🛡️ **Dual-Mode MCP Architecture**
+    The only platform that works simultaneously as an **MCP Client** (to use tools) and an **OAuth-enabled MCP Server** (to provide data), creating a complete data loop. 
 
 ---
 
-## 🏥 The Killer App: Next-Gen Health Intelligence
+## 🏥 Theta Wellness: Our Health Intelligence App
 
-While Mirobody is a general-purpose engine, our team is laser-focused on **Personal Health** as our primary mission. We have built a professional-grade **Health Data Analysis** suite directly into the core, proving the platform's ability to handle the most complex, multi-modal, and sensitive data environments.
+**Theta Wellness** is our flagship application built on Mirobody, demonstrating the platform's capabilities in the **Personal Health** domain. We have built a professional-grade **Health Data Analysis** suite that showcases how Mirobody can handle the most complex, multi-modal, and sensitive data environments.
 
 * **Broad Integration**: Connects with **300+ device manufacturers**, Apple Health, and Google Health.
 * **EHR Ready**: Compatible with systems covering **90% of the US population's** Electronic Health Records.
@@ -50,7 +50,7 @@ Initialize your environment in seconds:
 
 ```bash
 cd config
-cp config.example.yaml myconfig.yaml
+cp config.example.yaml config.yaml
 ````
 
 > **Note**:
