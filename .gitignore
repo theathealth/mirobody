@@ -1,3 +1,7 @@
 *.pyc
 config/config.yaml
-
+.cursorindexingignore
+.env
+.specstory/
+__pycache__/
+.DS_Store
